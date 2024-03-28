@@ -21,11 +21,36 @@ uses
    Vcl.Graphics,
    Vcl.StdCtrls,
 
+   Winapi.WebView2,
+   Winapi.ActiveX,
    Winapi.Messages,
    Winapi.Windows,
 
    Vcl.PythonGUIInputOutput,
-   PythonEngine;
+   PythonEngine,
+
+   Data.DB,
+   FireDAC.Stan.Intf,
+   FireDAC.Stan.Option,
+   FireDAC.Stan.Error,
+   FireDAC.UI.Intf,
+   FireDAC.Phys.Intf,
+   FireDAC.Stan.Def,
+   FireDAC.Stan.Pool,
+   FireDAC.Stan.Async,
+   FireDAC.Phys,
+   FireDAC.VCLUI.Wait,
+   FireDAC.Stan.ExprFuncs,
+   FireDAC.Phys.SQLiteWrapper.Stat,
+   FireDAC.Phys.SQLiteDef,
+   FireDAC.Stan.Param,
+   FireDAC.DatS,
+   FireDAC.DApt.Intf,
+   FireDAC.DApt,
+   FireDAC.Comp.DataSet,
+   FireDAC.Comp.Client,
+   FireDAC.Phys.SQLite,
+   FireDAC.Comp.UI;
 
 type
    TFrmMain = class(TForm)
@@ -43,6 +68,8 @@ type
 
       pgcMain: TPageControl;
       tsResponse: TTabSheet;
+      tsHTML: TTabSheet;
+      ebResponse: TEdgeBrowser;
 
       procedure FormCreate(Sender: TObject);
       procedure FormShow(Sender: TObject);
@@ -96,7 +123,7 @@ end;
 
 procedure TFrmMain.FormCreate(Sender: TObject);
 begin
-   pgcMain.ActivePage := tsResponse;
+   pgcMain.ActivePage := tsHTML;
 
    mmoCode.Visible := False;
    mmoCode.Enabled := False;
@@ -115,11 +142,13 @@ begin
    mmoChat.Lines.Clear;
 
    {$IFDEF DEBUG}
-   mmoChat.Lines.Text := //
-      'Quais são os eventos históricos aconteceram nesta data de hoje ' + //
-      FormatDateTime('dd/mm', Now) + //
-      ' no Brasil' + //
-      ' ?';
+   // mmoChat.Lines.Text := //
+   // 'Quais são os eventos históricos aconteceram nesta data de hoje ' + //
+   // FormatDateTime('dd/mm', Now) + //
+   // ' no Brasil' + //
+   // ' ?';
+
+   mmoChat.Lines.Text := 'create 4 images of pandas, photorealistic, ultra-realistic, high-definition, cinematic, hdr, 8k';
    {$ENDIF}
    pyEngine.InitThreads := True;
 end;
@@ -134,7 +163,7 @@ var
    LDirectory: string;
    LResponse: string;
 begin
-   pgcMain.ActivePage := tsResponse;
+   pgcMain.ActivePage := tsHTML;
 
    mmoResponse.Lines.Clear;
 
@@ -158,6 +187,10 @@ begin
       try
          TThread.Queue(TThread.Current,
             procedure
+            var
+               FConn: TFDConnection;
+               FQry: TFDQuery;
+               LHtml: string;
             begin
                try
                   pyInOut.Output.Lines.Clear;
@@ -179,6 +212,25 @@ begin
                            , FChat // ARequestJSON//
                            , LResponse // AResponseJSON//
                            );
+
+                        FConn := TFDConnection.Create(nil);
+                        FQry := TFDQuery.Create(nil);
+                        try
+                           FConn.LoginPrompt := False;
+                           FConn.DriverName := 'SQLite';
+                           FConn.Params.Database := 'results\gemini-' + FormatDateTime('yyyymmdd', Now) + '.db';
+
+                           FQry.Connection := FConn;
+
+                           FQry.Close;
+                           FQry.Open('SELECT DS_FILE_HTML FROM GEMINI ORDER BY DT_REG_INS DESC LIMIT 1');
+
+                           LHtml := FQry.Fields[0].AsString;
+                           ebResponse.Navigate(LHtml);
+                        finally
+                           FreeAndNil(FQry);
+                           FreeAndNil(FConn);
+                        end;
                      end);
 
                except

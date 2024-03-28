@@ -138,6 +138,7 @@ object FrmMain: TFrmMain
       '    ,DS_RESULT TEXT DEFAULT NULL'
       '    ,NR_RESULT VARCHAR(255) DEFAULT NULL'
       '    ,DS_HTML TEXT DEFAULT NULL'
+      '    ,DS_FILE_HTML VARCHAR(255) DEFAULT NULL'
       '    ,DS_OBS TEXT DEFAULT NULL'
       '    ,FL_REG_STATUS INTEGER DEFAULT 1'
       '    ,DT_REG_INS DATETIME DEFAULT CURRENT_TIMESTAMP'
@@ -147,7 +148,9 @@ object FrmMain: TFrmMain
       '    )'
       ''
       '    prompt = """#prompt"""'
-      '    # prompt = """explique a teoria da relatividade"""'
+      
+        '    # prompt = """create 4 images of panda, realistic, photograp' +
+        'hic, cinematographic """'
       ''
       '    client = GeminiClient()'
       ''
@@ -162,8 +165,14 @@ object FrmMain: TFrmMain
       '    response = await client.generate_content(prompt)'
       ''
       '    for candidate in response.candidates:'
-      ''
       '        print(candidate.text)'
+      ''
+      '        html_images = ""'
+      '        for image in response.images:'
+      '            html_images = f"""{html_images}<br>\n'
+      '            <label>{image.title} {image.alt}</label><br>\n'
+      '            <img src="{image.url}"\n'
+      '            alt="{image.alt}" width="512" height="512">\n"""'
       ''
       '        html_string = f"""'
       '        <!DOCTYPE html>'
@@ -183,6 +192,7 @@ object FrmMain: TFrmMain
       '        </head>'
       '        <body>'
       '            {markdown.markdown(candidate.text)}'
+      '            {html_images}'
       '        </body>'
       '        </html>'
       '        """'
@@ -192,7 +202,7 @@ object FrmMain: TFrmMain
         'urrent_time + ".html")'
       '        with open(file_html, "w", encoding="utf-8") as file:'
       '            file.write(html_string)'
-      '        file_htm_bin = await convertToBinaryData(file_html)'
+      '        file_html_bin = await convertToBinaryData(file_html)'
       ''
       '        task_end = datetime.datetime.now()'
       '        task_total = task_end - task_begin'
@@ -212,12 +222,14 @@ object FrmMain: TFrmMain
       '        ,DS_RESULT'
       '        ,NR_RESULT'
       '        ,DS_HTML'
-      '        ) VALUES (?,?,?,?)""",'
+      '        ,DS_FILE_HTML'
+      '        ) VALUES (?,?,?,?,?)""",'
       '            ('
       '                str(prompt),'
       '                str(candidate.text),'
       '                str(task_total),'
-      '                file_htm_bin,'
+      '                file_html_bin,'
+      '                file_html,'
       '            ),'
       '        )'
       ''
@@ -259,16 +271,16 @@ object FrmMain: TFrmMain
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
-      ActivePage = tsResponse
+      ActivePage = tsHTML
       Align = alClient
+      MultiLine = True
       TabOrder = 0
-      ExplicitHeight = 265
       object tsResponse: TTabSheet
         Margins.Left = 5
         Margins.Top = 5
         Margins.Right = 5
         Margins.Bottom = 5
-        Caption = 'Bard: Result'
+        Caption = 'Result'
         ImageIndex = 1
         object mmoResponse: TMemo
           AlignWithMargins = True
@@ -282,11 +294,34 @@ object FrmMain: TFrmMain
           Margins.Bottom = 5
           Align = alClient
           Lines.Strings = (
-            'Bard')
+            'Result')
           ScrollBars = ssVertical
           TabOrder = 0
-          ExplicitWidth = 1126
-          ExplicitHeight = 213
+        end
+      end
+      object tsHTML: TTabSheet
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Result +'
+        ImageIndex = 1
+        object ebResponse: TEdgeBrowser
+          Left = 0
+          Top = 0
+          Width = 1146
+          Height = 490
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Align = alClient
+          TabOrder = 0
+          UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
+          ExplicitLeft = 576
+          ExplicitTop = 240
+          ExplicitWidth = 150
+          ExplicitHeight = 60
         end
       end
     end
