@@ -1,0 +1,4 @@
+markdown
+mistune
+translang
+python-gemini-api
