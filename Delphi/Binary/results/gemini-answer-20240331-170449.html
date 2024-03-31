@@ -1,0 +1,65 @@
+
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+        <meta charset="utf-8">
+            <title>Gemini API (Google) 2024-03-31 17:04:49.361304</title>
+            <link href='https://fonts.googleapis.com/css?family=PT+Sans'
+        rel='stylesheet' type='text/css'>
+            <style>
+                body {
+                    font-family: PT Sans;
+                }
+            </style>
+        </head>
+        <body>
+            <p>Absolutely! Here's how you can implement a new field showing the time difference between now and the <code>REG_DH_INS</code> (registration date/time) in hours using SQLite:</p>
+<p><strong>1. Utilize <code>DATETIME('now')</code> function:</strong></p>
+<p>We'll leverage the <code>DATETIME('now')</code> function within the view to get the current date and time.</p>
+<p><strong>2. Leverage <code>julianday()</code> function:</strong></p>
+<p>The <code>julianday()</code> function in SQLite converts a datetime value to a Julian Day number. This allows for easy subtraction to calculate the difference between two timestamps.</p>
+<p><strong>3. Calculate the difference in days:</strong></p>
+<p>Subtract the <code>julianday()</code> of <code>REG_DH_INS</code> from <code>julianday(DATETIME('now'))</code>. This will give you the difference in days.</p>
+<p><strong>4. Convert days to hours:</strong></p>
+<p>Since you want the difference in hours, multiply the result from step 3 by 24 (hours per day).</p>
+<p><strong>5. Include the new field in the view:</strong></p>
+<p>Add a new calculated field to the view selection using a CASE statement. Here's the modified view with the new field:</p>
+<p><code>sql
+CREATE VIEW VW_PRODUCT_V2 AS
+SELECT P.ID_PROD AS PRODUCT_ID,
+       C.DS_CATEG AS CATEGORY,
+       B.DS_BRAND AS BRAND,
+       M.DS_MODEL AS MODEL,
+       P.DS_PROD AS PRODUCT_NAME,
+       A.VL_OF AS VL_OF,
+       A.VL_PER AS VL_PER,
+       CASE WHEN A.VL_OF &gt; 0 THEN 
+         ROUND((A.VL_PER - A.VL_OF) / A.VL_OF * 100, 2)
+       ELSE
+         0.00
+       END AS DISCOUNT,       
+       P.URL_IMG AS PRODUCT_IMAGE,
+       A.URL_AFFILIATE AS AFFILIATE_LINK,
+       P.REG_DH_INS AS REG_DH_INS,
+       /* New field for time difference in hours */
+       CASE WHEN P.REG_DH_INS IS NOT NULL THEN
+           ROUND((julianday(DATETIME('now')) - julianday(P.REG_DH_INS)) * 24, 2)
+       ELSE
+           NULL
+       END AS TIME_DIFF_HOURS
+FROM TB_PROD P
+INNER JOIN TB_CATEG C ON P.ID_CATEG = C.ID_CATEG
+INNER JOIN TB_BRAND B ON P.ID_BRAND = B.ID_BRAND
+LEFT JOIN TB_MODEL M ON P.ID_MODEL = M.ID_MODEL
+LEFT JOIN TB_PROD_AFFILIATE PA ON P.ID_PROD = PA.ID_PROD
+LEFT JOIN TB_AFFILIATE A ON PA.ID_AFFILIATE = A.ID_AFFILIATE;</code></p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>The <code>CASE WHEN P.REG_DH_INS IS NOT NULL THEN ... ELSE NULL END</code> ensures the calculation only happens for valid timestamps in <code>REG_DH_INS</code>.</li>
+<li><code>ROUND((julianday(DATETIME('now')) - julianday(P.REG_DH_INS)) * 24, 2)</code> calculates the difference in days, multiplies by 24 for hours, and rounds to two decimal places.</li>
+</ul>
+<p>This implementation creates a new field named <code>TIME_DIFF_HOURS</code> within the view, showing the time difference between the current date/time and the <code>REG_DH_INS</code> in hours.</p>
+            
+        </body>
+        </html>
+        

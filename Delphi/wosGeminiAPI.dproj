@@ -122,8 +122,8 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
         <VerInfo_Release>31</VerInfo_Release>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
-        <VerInfo_Build>57</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=2024.1.31.57;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=br.codigo-livre.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=2023.11.28.0;Comments=https://github.com/wos83</VerInfo_Keys>
+        <VerInfo_Build>64</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=2024.1.31.64;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=br.codigo-livre.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=2023.11.28.0;Comments=https://github.com/wos83</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>

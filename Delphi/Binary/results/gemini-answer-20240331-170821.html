@@ -1,0 +1,66 @@
+
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+        <meta charset="utf-8">
+            <title>Gemini API (Google) 2024-03-31 17:08:21.758161</title>
+            <link href='https://fonts.googleapis.com/css?family=PT+Sans'
+        rel='stylesheet' type='text/css'>
+            <style>
+                body {
+                    font-family: PT Sans;
+                }
+            </style>
+        </head>
+        <body>
+            <p>Certo, como desenvolvedor SQL sênior, aqui está a implementação para criar um campo que mostra a diferença de tempo em minutos entre o momento atual e o <code>REG_DH_INS</code> usando a estrutura de tabelas fornecida:</p>
+<p><strong>1. Alterando a View VW_PRODUCT_V1:</strong></p>
+<p>Você não pode modificar diretamente uma view existente no SQLite. Precisamos criar uma nova view baseada na existente, adicionando a nova coluna calculada. </p>
+<p><code>sql
+CREATE VIEW VW_PRODUCT_V2 AS
+SELECT P.ID_PROD AS PRODUCT_ID,
+       C.DS_CATEG AS CATEGORY,
+       B.DS_BRAND AS BRAND,
+       M.DS_MODEL AS MODEL,
+       P.DS_PROD AS PRODUCT_NAME,
+       A.VL_OF AS VL_OF,
+       A.VL_PER AS VL_PER,
+       CASE WHEN A.VL_OF &gt; 0 THEN 
+         ROUND((A.VL_PER - A.VL_OF) / A.VL_OF * 100, 2)
+       ELSE
+         0.00
+       END AS DISCOUNT,       
+       P.URL_IMG AS PRODUCT_IMAGE,
+       A.URL_AFFILIATE AS AFFILIATE_LINK,
+       P.REG_DH_INS AS REG_DH_INS,
+       /* Nova coluna calculada */
+       CAST(strftime('%s', 'now') AS FLOAT) - CAST(strftime('%s', P.REG_DH_INS) AS FLOAT) / 60 AS TIME_DIFF_MINUTES
+FROM TB_PROD P
+INNER JOIN TB_CATEG C ON P.ID_CATEG = C.ID_CATEG
+INNER JOIN TB_BRAND B ON P.ID_BRAND = B.ID_BRAND
+LEFT JOIN TB_MODEL M ON P.ID_MODEL = M.ID_MODEL
+LEFT JOIN TB_PROD_AFFILIATE PA ON P.ID_PROD = PA.ID_PROD
+LEFT JOIN TB_AFFILIATE A ON PA.ID_AFFILIATE = A.ID_AFFILIATE;</code></p>
+<p><strong>Explicação:</strong></p>
+<ul>
+<li>A nova view <code>VW_PRODUCT_V2</code> seleciona todas as colunas da view original <code>VW_PRODUCT_V1</code>.</li>
+<li>Uma nova coluna calculada, <code>TIME_DIFF_MINUTES</code>, é adicionada.</li>
+<li>A função <code>strftime('%s', 'now')</code> converte a data e hora atual em um timestamp do tipo Unix (número de segundos desde 1970-01-01 00:00:00 UTC).</li>
+<li>A função <code>strftime('%s', P.REG_DH_INS)</code> converte o valor da coluna <code>REG_DH_INS</code> (assumindo que seja do tipo DATETIME) em um timestamp do tipo Unix.</li>
+<li>A diferença entre os timestamps é calculada e então dividida por 60 para obter a diferença em minutos.</li>
+<li>A conversão para FLOAT usando <code>CAST</code> garante precisão para cálculos com decimais.</li>
+</ul>
+<p><strong>2. Implementando a consulta:</strong></p>
+<p>Agora você pode consultar a nova view <code>VW_PRODUCT_V2</code> para obter os dados do produto, incluindo a diferença de tempo em minutos:</p>
+<p><code>sql
+SELECT * FROM VW_PRODUCT_V2;</code></p>
+<p>Esta consulta retornará todas as colunas, incluindo <code>TIME_DIFF_MINUTES</code>, que mostra a diferença de tempo entre o momento atual e o <code>REG_DH_INS</code> para cada produto.</p>
+<p><strong>Observação:</strong></p>
+<ul>
+<li>Certifique-se de que a coluna <code>REG_DH_INS</code> esteja armazenada no formato DATETIME para a conversão para timestamp funcionar corretamente.</li>
+<li>Você pode modificar a consulta para selecionar colunas específicas e filtrar os resultados.</li>
+</ul>
+            
+        </body>
+        </html>
+        

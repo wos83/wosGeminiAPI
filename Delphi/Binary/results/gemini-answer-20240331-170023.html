@@ -1,0 +1,61 @@
+
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+        <meta charset="utf-8">
+            <title>Gemini API (Google) 2024-03-31 17:00:23.360729</title>
+            <link href='https://fonts.googleapis.com/css?family=PT+Sans'
+        rel='stylesheet' type='text/css'>
+            <style>
+                body {
+                    font-family: PT Sans;
+                }
+            </style>
+        </head>
+        <body>
+            <p>Absolutely! Here's how you can implement the desired functionality in SQLite using the provided table structure:</p>
+<p><strong>1. Adding the Calculated Field:</strong></p>
+<p>We can't directly modify a view in SQLite. However, we can create a new view that inherits the data from the existing one and adds the calculated field for the time difference.</p>
+<p>Here's the modified SQL code:</p>
+<p><code>sql
+CREATE VIEW VW_PRODUCT_V2 AS
+SELECT P.ID_PROD AS PRODUCT_ID,
+       C.DS_CATEG AS CATEGORY,
+       B.DS_BRAND AS BRAND,
+       M.DS_MODEL AS MODEL,
+       P.DS_PROD AS PRODUCT_NAME,
+       A.VL_OF AS VL_OF,
+       A.VL_PER AS VL_PER,
+       CASE WHEN A.VL_OF &gt; 0 THEN 
+         ROUND((A.VL_PER - A.VL_OF) / A.VL_OF * 100, 2)
+       ELSE
+         0.00
+       END AS DISCOUNT,       
+       P.URL_IMG AS PRODUCT_IMAGE,
+       A.URL_AFFILIATE AS AFFILIATE_LINK,
+       P.REG_DH_INS AS REG_DH_INS,
+       /* New calculated field */
+       CAST(julianday(CURRENT_TIMESTAMP) - julianday(P.REG_DH_INS) * 24 * 60 AS INTEGER) AS TIME_DIFF_MINUTES
+FROM TB_PROD P
+INNER JOIN TB_CATEG C ON P.ID_CATEG = C.ID_CATEG
+INNER JOIN TB_BRAND B ON P.ID_BRAND = B.ID_BRAND
+LEFT JOIN TB_MODEL M ON P.ID_MODEL = M.ID_MODEL
+LEFT JOIN TB_PROD_AFFILIATE PA ON P.ID_PROD = PA.ID_PROD
+LEFT JOIN TB_AFFILIATE A ON PA.ID_AFFILIATE = A.ID_AFFILIATE;</code></p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li><code>CURRENT_TIMESTAMP</code>: This function retrieves the current date and time in SQLite.</li>
+<li><code>julianday(date_expression)</code>: This function converts a date or datetime expression to a Julian Day number.</li>
+<li><code>* 24 * 60</code>: This part converts the difference in Julian days to minutes. </li>
+<li><code>CAST(... AS INTEGER)</code>: This ensures the result is stored as an integer representing the time difference in minutes.</li>
+</ul>
+<p><strong>2. Implementation:</strong></p>
+<ul>
+<li>Save the modified SQL code as a new script or directly execute it in your SQLite client.</li>
+<li>Start using the new view <code>VW_PRODUCT_V2</code> in your queries to access the <code>TIME_DIFF_MINUTES</code> field.</li>
+</ul>
+<p>This approach allows you to leverage the existing data from <code>VW_PRODUCT_V1</code> and add the desired time difference calculation without modifying the original view.</p>
+            
+        </body>
+        </html>
+        
