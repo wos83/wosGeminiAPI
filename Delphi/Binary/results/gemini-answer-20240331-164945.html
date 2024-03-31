@@ -1,0 +1,63 @@
+
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+        <meta charset="utf-8">
+            <title>Gemini API (Google) 2024-03-31 16:49:45.434260</title>
+            <link href='https://fonts.googleapis.com/css?family=PT+Sans'
+        rel='stylesheet' type='text/css'>
+            <style>
+                body {
+                    font-family: PT Sans;
+                }
+            </style>
+        </head>
+        <body>
+            <p>Certainly, here's how you can implement a new field showing the time in minutes based on the provided table structure using SQLite:</p>
+<p><strong>1.  Adding a Virtual Column:</strong></p>
+<p>Since you're using a view (<code>VW_PRODUCT_V1</code>), directly adding a new column with calculations isn't possible. However, SQLite allows creating virtual columns within the view itself. Here's how:</p>
+<p><code>sql
+CREATE VIEW VW_PRODUCT_V1 AS
+SELECT P.ID_PROD AS PRODUCT_ID,
+       C.DS_CATEG AS CATEGORY,
+       B.DS_BRAND AS BRAND,
+       M.DS_MODEL AS MODEL,
+       P.DS_PROD AS PRODUCT_NAME,
+       A.VL_OF AS VL_OF,
+       A.VL_PER AS VL_PER,
+       CASE WHEN A.VL_OF &gt; 0 THEN 
+         ROUND((A.VL_PER - A.VL_OF) / A.VL_OF * 100, 2)
+       ELSE
+         0.00
+       END AS DISCOUNT,       
+       P.URL_IMG AS PRODUCT_IMAGE,
+       A.URL_AFFILIATE AS AFFILIATE_LINK,
+       P.REG_DH_INS AS REG_DH_INS,
+       /* New virtual column for time in minutes */
+       CAST(strftime('%M', P.REG_DH_INS) AS INTEGER) AS TIME_IN_MINUTES
+FROM TB_PROD P
+INNER JOIN TB_CATEG C ON P.ID_CATEG = C.ID_CATEG
+INNER JOIN TB_BRAND B ON P.ID_BRAND = B.ID_BRAND
+LEFT JOIN TB_MODEL M ON P.ID_MODEL = M.ID_MODEL
+LEFT JOIN TB_PROD_AFFILIATE PA ON P.ID_PROD = PA.ID_PROD
+LEFT JOIN TB_AFFILIATE A ON PA.ID_AFFILIATE = A.ID_AFFILIATE;</code></p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>We've added a new line within the <code>SELECT</code> statement:</li>
+<li><code>CAST(strftime('%M', P.REG_DH_INS) AS INTEGER) AS TIME_IN_MINUTES</code></li>
+<li>This uses the <code>strftime</code> function to extract the minute part (<code>%M</code>) from the <code>REG_DH_INS</code> column (assuming it's a datetime or timestamp).</li>
+<li>The extracted value is then cast to an integer using <code>CAST</code> and aliased as <code>TIME_IN_MINUTES</code>.</li>
+</ul>
+<p><strong>2. Using the New Field:</strong></p>
+<p>Now you can query the view (<code>VW_PRODUCT_V1</code>) and access the <code>TIME_IN_MINUTES</code> field alongside other existing fields. For example:</p>
+<p><code>sql
+SELECT PRODUCT_ID, CATEGORY, BRAND, TIME_IN_MINUTES
+FROM VW_PRODUCT_V1
+ORDER BY TIME_IN_MINUTES DESC;</code></p>
+<p>This will retrieve the product details along with the time of registration in minutes (descending order).</p>
+<p><strong>Important Note:</strong></p>
+<p>This approach assumes <code>REG_DH_INS</code> stores datetime or timestamp data. If it's a different data type, you might need to adjust the <code>strftime</code> format string accordingly.</p>
+            
+        </body>
+        </html>
+        

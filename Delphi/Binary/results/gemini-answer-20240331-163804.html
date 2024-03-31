@@ -1,0 +1,75 @@
+
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+        <meta charset="utf-8">
+            <title>Gemini API (Google) 2024-03-31 16:38:04.515740</title>
+            <link href='https://fonts.googleapis.com/css?family=PT+Sans'
+        rel='stylesheet' type='text/css'>
+            <style>
+                body {
+                    font-family: PT Sans;
+                }
+            </style>
+        </head>
+        <body>
+            <p>Absolutely! Here's how you can implement a new field in your SQLite view <code>VW_PRODUCT_V1</code> that shows the time difference in minutes, hours, or days, based on a provided reference time:</p>
+<p><strong>1. Choose a Reference Time:</strong></p>
+<ul>
+<li>Decide on a reference time for comparison. This could be the current date and time (<code>datetime('now')</code>), a specific date stored in another column, or a user-defined input.</li>
+</ul>
+<p><strong>2. Create a New Calculated Field:</strong></p>
+<p>We'll utilize SQLite's built-in date and time functions to achieve this. Here's the modified view definition:</p>
+<p><code>sql
+CREATE VIEW VW_PRODUCT_V1 AS
+SELECT P.ID_PROD AS PRODUCT_ID,
+       C.DS_CATEG AS CATEGORY,
+       B.DS_BRAND AS BRAND,
+       M.DS_MODEL AS MODEL,
+       P.DS_PROD AS PRODUCT_NAME,
+       A.VL_OF AS VL_OF,
+       A.VL_PER AS VL_PER,
+       CASE WHEN A.VL_OF &gt; 0 THEN 
+         ROUND((A.VL_PER - A.VL_OF) / A.VL_OF * 100, 2)
+       ELSE
+         0.00
+       END AS DISCOUNT,       
+       P.URL_IMG AS PRODUCT_IMAGE,
+       A.URL_AFFILIATE AS AFFILIATE_LINK,
+       P.REG_DH_INS AS REG_DH_INS,
+       /* New calculated field */
+       CAST(julianday('now') - julianday(REG_DH_INS) AS INTEGER) * 1440  /* Total minutes */ +
+       ((strftime('%M', 'now') - strftime('%M', REG_DH_INS)) * 60)  /* Current minute difference */ +
+       (strftime('%H', 'now') - strftime('%H', REG_DH_INS)) * 60  /* Current hour difference */ AS TIME_DIFF
+FROM TB_PROD P
+INNER JOIN TB_CATEG C ON P.ID_CATEG = C.ID_CATEG
+INNER JOIN TB_BRAND B ON P.ID_BRAND = B.ID_BRAND
+LEFT JOIN TB_MODEL M ON P.ID_MODEL = M.ID_MODEL
+LEFT JOIN TB_PROD_AFFILIATE PA ON P.ID_PROD = PA.ID_PROD
+LEFT JOIN TB_AFFILIATE A ON PA.ID_AFFILIATE = A.ID_AFFILIATE
+;</code></p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li><code>julianday(REG_DH_INS)</code> converts the <code>REG_DH_INS</code> column (assuming it's a datetime type) to Julian Day number.</li>
+<li><code>julianday('now')</code> gets the Julian Day number for the current date and time.</li>
+<li>The difference between these Julian Day numbers gives us the total number of days elapsed.</li>
+<li>We multiply it by 1440 (minutes in a day) to get the total minutes.</li>
+<li><code>strftime('%M', 'now')</code> and <code>strftime('%M', REG_DH_INS)</code> extract the current and registration minute values.</li>
+<li>Subtracting them and multiplying by 60 gives the current minute difference.</li>
+<li>Similarly, <code>strftime('%H', 'now')</code> and <code>strftime('%H', REG_DH_INS)</code> extract the current and registration hour values.</li>
+<li>Subtracting them and multiplying by 60 gives the current hour difference.</li>
+<li>Finally, we combine all these calculations to get the total time difference in minutes.</li>
+</ul>
+<p><strong>3. Selecting and Interpreting the New Field:</strong></p>
+<p>In your queries, you can now select the <code>TIME_DIFF</code> field to retrieve the time difference. Depending on the value, you can interpret it as:</p>
+<ul>
+<li>Positive value: Represents the time elapsed since registration.</li>
+<li>Zero: Indicates the registration happened at the same time as the reference time.</li>
+</ul>
+<p><strong>4. Formatting the Output (Optional):</strong></p>
+<p>If you want to display the time difference in a more user-friendly format (e.g., "2 days 3 hours 15 minutes"), you can use additional logic within your application to parse the <code>TIME_DIFF</code> value and format it accordingly.</p>
+<p>This approach provides a flexible way to calculate and display the time difference in your view, adapting to minutes, hours, or days based on the elapsed time.</p>
+            
+        </body>
+        </html>
+        

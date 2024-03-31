@@ -1,0 +1,62 @@
+
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+        <meta charset="utf-8">
+            <title>Gemini API (Google) 2024-03-31 16:52:10.300170</title>
+            <link href='https://fonts.googleapis.com/css?family=PT+Sans'
+        rel='stylesheet' type='text/css'>
+            <style>
+                body {
+                    font-family: PT Sans;
+                }
+            </style>
+        </head>
+        <body>
+            <p>Absolutely! Here's how you can implement a new field showing the hour part of the <code>REG_DH_INS</code> (registration date and time) in your SQLite view using a senior developer approach:</p>
+<p><strong>1. Utilize the STRFTIME function:</strong></p>
+<p>We'll leverage the <code>STRFTIME</code> function in SQLite to extract the hour component from the <code>REG_DH_INS</code> datetime field. This function allows us to format the datetime based on a specific format string.</p>
+<p><strong>2. Modify the VW_PRODUCT_V1 View:</strong></p>
+<p>Here's the modified view with the new field:</p>
+<p><code>sql
+CREATE VIEW VW_PRODUCT_V1 AS
+SELECT P.ID_PROD AS PRODUCT_ID,
+       C.DS_CATEG AS CATEGORY,
+       B.DS_BRAND AS BRAND,
+       M.DS_MODEL AS MODEL,
+       P.DS_PROD AS PRODUCT_NAME,
+       A.VL_OF AS VL_OF,
+       A.VL_PER AS VL_PER,
+       CASE WHEN A.VL_OF &gt; 0 THEN 
+         ROUND((A.VL_PER - A.VL_OF) / A.VL_OF * 100, 2)
+       ELSE
+         0.00
+       END AS DISCOUNT,       
+       P.URL_IMG AS PRODUCT_IMAGE,
+       A.URL_AFFILIATE AS AFFILIATE_LINK,
+       P.REG_DH_INS AS REG_DH_INS,
+       -- New field with hour extracted using STRFTIME
+       STRFTIME('%H', P.REG_DH_INS) AS REG_HOUR
+FROM TB_PROD P
+INNER JOIN TB_CATEG C ON P.ID_CATEG = C.ID_CATEG
+INNER JOIN TB_BRAND B ON P.ID_BRAND = B.ID_BRAND
+LEFT JOIN TB_MODEL M ON P.ID_MODEL = M.ID_MODEL
+LEFT JOIN TB_PROD_AFFILIATE PA ON P.ID_PROD = PA.ID_PROD
+LEFT JOIN TB_AFFILIATE A ON PA.ID_AFFILIATE = A.ID_AFFILIATE;</code></p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li><code>STRFTIME('%H', P.REG_DH_INS)</code>: This part extracts the hour from the <code>REG_DH_INS</code> field. The <code>%H</code> format specifier represents the hour in 24-hour format (00-23).</li>
+<li><code>AS REG_HOUR</code>: We alias the extracted hour as <code>REG_HOUR</code> for clarity in your view.</li>
+</ul>
+<p><strong>Using the New Field:</strong></p>
+<p>Now, you can access the newly created <code>REG_HOUR</code> field in your queries to filter or analyze product registrations based on the hour of the day.</p>
+<p><strong>Additional Considerations:</strong></p>
+<ul>
+<li>If you prefer a 12-hour format with AM/PM, use <code>%I</code> instead of <code>%H</code> in the <code>STRFTIME</code> function.</li>
+<li>Remember that SQLite doesn't have a dedicated time data type. The <code>REG_DH_INS</code> is likely stored as a text string, so ensure it's a valid datetime format for extraction using <code>STRFTIME</code>.</li>
+</ul>
+<p>This approach demonstrates a clean and efficient way to add a calculated field based on an existing datetime field in your SQLite view using SQL best practices.</p>
+            
+        </body>
+        </html>
+        

@@ -1,0 +1,72 @@
+
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+        <meta charset="utf-8">
+            <title>Gemini API (Google) 2024-03-31 10:39:29.099822</title>
+            <link href='https://fonts.googleapis.com/css?family=PT+Sans'
+        rel='stylesheet' type='text/css'>
+            <style>
+                body {
+                    font-family: PT Sans;
+                }
+            </style>
+        </head>
+        <body>
+            <h2>Configurando o Delphi 10.2.3 para depuração de um aplicativo IntraWeb no IIS:</h2>
+<p><strong>1. Definindo o projeto como CGI:</strong></p>
+<ul>
+<li>Abra o projeto IntraWeb no Delphi 10.2.3.</li>
+<li>No menu principal, selecione <strong>Project &gt; Options</strong>.</li>
+<li>Na guia <strong>Application</strong>, altere o tipo de projeto para <strong>CGI Application</strong>.</li>
+<li>Especifique o nome do arquivo CGI principal (geralmente <code>main.exe</code>).</li>
+</ul>
+<p><strong>2. Configurando o IIS:</strong></p>
+<ul>
+<li>Abra o Gerenciador de Serviços de Informações da Internet (IIS).</li>
+<li>Navegue até o site que hospeda o aplicativo IntraWeb.</li>
+<li>Clique com o botão direito do mouse no nome do site e selecione <strong>Adicionar Aplicativo Virtual</strong>.</li>
+<li>No campo <strong>Nome do alias</strong>, digite o nome do alias do aplicativo (por exemplo, <code>intraweb</code>).</li>
+<li>No campo <strong>Caminho físico</strong>, especifique o diretório onde o arquivo <code>main.exe</code> está localizado.</li>
+<li>Selecione a opção <strong>Permitir scripts</strong>.</li>
+<li>Clique em <strong>OK</strong> para criar o aplicativo virtual.</li>
+</ul>
+<p><strong>3. Habilitando a depuração no IIS:</strong></p>
+<ul>
+<li>Abra o <strong>Painel de Controle</strong> do Windows.</li>
+<li>Selecione <strong>Programas e Recursos</strong> &gt; <strong>Ativar ou desativar recursos do Windows</strong>.</li>
+<li>Expanda <strong>Internet Information Services (IIS)</strong> &gt; <strong>Serviços de Desenvolvimento de Aplicativos</strong>.</li>
+<li>Marque a caixa de seleção <strong>Depuração de ASP.NET</strong>.</li>
+<li>Clique em <strong>OK</strong> para instalar o recurso de depuração.</li>
+</ul>
+<p><strong>4. Configurando o Delphi para depuração:</strong></p>
+<ul>
+<li>No Delphi, acesse o menu <strong>Run &gt; Debug Options</strong>.</li>
+<li>Na guia <strong>Debugger</strong>, selecione <strong>IIS</strong> como o tipo de depurador.</li>
+<li>Especifique a porta que o IIS usará para depuração (geralmente 8080).</li>
+<li>Marque a caixa de seleção <strong>Habilitar depuração remota</strong>.</li>
+<li>Clique em <strong>OK</strong> para salvar as configurações de depuração.</li>
+</ul>
+<p><strong>5. Iniciando a depuração:</strong></p>
+<ul>
+<li>Pressione <strong>F9</strong> no Delphi para iniciar a depuração.</li>
+<li>O Delphi se conectará ao IIS e iniciará o processo de depuração.</li>
+<li>Você poderá usar os recursos de depuração do Delphi para examinar o código, definir pontos de interrupção e avaliar variáveis.</li>
+</ul>
+<p><strong>Dicas adicionais:</strong></p>
+<ul>
+<li>Certifique-se de que o IIS esteja configurado para usar o mesmo pool de aplicativos que o Delphi.</li>
+<li>Se você estiver usando o IIS Express, configure o Delphi para usar a porta 8080.</li>
+<li>Você pode usar o log do IIS para verificar se há erros durante a depuração.</li>
+</ul>
+<p><strong>Recursos úteis:</strong></p>
+<ul>
+<li>Documentação IntraWeb: <a href="https://www.atozed.com/intraweb/docs/">https://www.atozed.com/intraweb/docs/</a></li>
+<li>Depuração de aplicativos ASP.NET no IIS: <a href="https://pt.stackoverflow.com/questions/59734/como-depurar-aplica%C3%A7%C3%B5es-asp-net-ou-webservices-no-iis">https://pt.stackoverflow.com/questions/59734/como-depurar-aplica%C3%A7%C3%B5es-asp-net-ou-webservices-no-iis</a></li>
+<li>Fórum da Embarcadero: <a href="https://en.delphipraxis.net/topic/241-new-official-embarcadero-forums-online/">https://en.delphipraxis.net/topic/241-new-official-embarcadero-forums-online/</a></li>
+</ul>
+<p><strong>Observação:</strong> Este guia fornece uma visão geral das etapas necessárias para depurar um aplicativo IntraWeb no IIS. Consulte a documentação do IntraWeb e do IIS para obter mais informações e instruções detalhadas.</p>
+            
+        </body>
+        </html>
+        
