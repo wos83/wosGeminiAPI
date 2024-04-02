@@ -1,0 +1,56 @@
+
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+        <meta charset="utf-8">
+            <title>Gemini API (Google) 2024-04-02 13:41:59.642956</title>
+            <link href='https://fonts.googleapis.com/css?family=PT+Sans'
+        rel='stylesheet' type='text/css'>
+            <style>
+                body {
+                    font-family: PT Sans;
+                }
+            </style>
+        </head>
+        <body>
+            <p>This code defines a unit named <code>Amplus.Financeiro.Moedas.Modelo</code> in Delphi. Here's a breakdown of the code:</p>
+<p><strong>Uses Clause:</strong></p>
+<ul>
+<li>It imports various units related to data access, FireDAC components for database connectivity, and standard system units.</li>
+</ul>
+<p><strong>Interface:</strong></p>
+<ul>
+<li>The <code>TMoedasModelo</code> class inherits from <code>TPadraoModelo</code>.</li>
+<li>It defines several private and public properties and methods for managing currency data.</li>
+</ul>
+<p><strong>Private Properties and Methods:</strong></p>
+<ul>
+<li><code>FMoedaPadrao</code>: String variable to store the default currency.</li>
+<li><code>ConfigurarIndicePadrao</code>: Sets the default currency flag in the database table.</li>
+<li><code>SetMoedaPadrao</code>: Retrieves the default currency ID from the database.</li>
+</ul>
+<p><strong>Public Properties and Methods:</strong></p>
+<ul>
+<li><code>MoedaPadrao</code>: Read-only property to access the default currency ID.</li>
+<li><code>Create</code> constructor: Initializes the class and sets the default currency.</li>
+<li><code>Consultar</code>: Retrieves currency data based on a provided ID or filter.</li>
+<li><code>ConsultarMoedasConversao</code>: Retrieves currency conversion data based on a provided ID or filter.</li>
+<li><code>ConsultarIndiceMoeda</code>: Finds the currency exchange rate for a specific date.</li>
+<li><code>qryMoedasAfterPost</code>: Event handler executed after inserting/updating a currency record. Sets the default currency flag.</li>
+<li><code>qryMoedasNewRecord</code>: Event handler executed before inserting a new currency record. Initializes inactive and default currency flags.</li>
+<li><code>qryMoedas_ConversaoNewRecord</code>: Event handler executed before inserting a new currency conversion record. Sets the foreign key, date, and initial exchange rate.</li>
+</ul>
+<p><strong>Implementation:</strong></p>
+<ul>
+<li>The constructor calls the inherited constructor and sets the default currency.</li>
+<li><code>Consultar</code> and <code>ConsultarMoedasConversao</code> methods prepare and execute SQL queries to retrieve currency and conversion data based on filters.</li>
+<li><code>ConsultarIndiceMoeda</code> searches for the exchange rate in the conversion table for a given date.</li>
+<li><code>ConfigurarIndicePadrao</code> ensures only one currency is marked as default in the database table.</li>
+<li><code>SetMoedaPadrao</code> retrieves the default currency ID from the database.</li>
+<li>Event handlers (<code>qryMoedasAfterPost</code>, <code>qryMoedasNewRecord</code>, <code>qryMoedas_ConversaoNewRecord</code>) perform actions based on data insert/update operations.</li>
+</ul>
+<p>Overall, this code snippet represents a data model class in Delphi for managing currency information and conversion rates in an application.</p>
+            
+        </body>
+        </html>
+        

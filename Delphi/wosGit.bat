@@ -17,9 +17,9 @@ del /s /f /q "%CD%\*.delphilsp.*"
 del /s /f /q "%CD%\iphist.dat"
 del /s /f /q "%CD%\*.map"
 
-del /s /f /q "%CD%\*.sdb"
-del /s /f /q "%CD%\*.s3db"
-del /s /f /q "%CD%\*.sqlite"
+rem del /s /f /q "%CD%\*.sdb"
+rem del /s /f /q "%CD%\*.s3db"
+rem del /s /f /q "%CD%\*.sqlite"
 
 for /F "usebackq tokens=1,2 delims==" %%i in (`wmic os get LocalDateTime /VALUE 2^>NUL`) do if '.%%i.'=='.LocalDateTime.' set ldt=%%j
 

@@ -1,0 +1,91 @@
+
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+        <meta charset="utf-8">
+            <title>Gemini API (Google) 2024-04-02 07:56:16.655335</title>
+            <link href='https://fonts.googleapis.com/css?family=PT+Sans'
+        rel='stylesheet' type='text/css'>
+            <style>
+                body {
+                    font-family: PT Sans;
+                }
+            </style>
+        </head>
+        <body>
+            <h2>Consulta para identificar a tabela com o maior número de registros:</h2>
+<p><code>sql
+SELECT 
+    t.name AS NomeDaTabela, 
+    COUNT(*) AS NumeroDeRegistros
+FROM 
+    sys.tables t
+INNER JOIN 
+    sys.indexes i ON t.object_id = i.object_id
+WHERE 
+    i.is_primary_key = 1
+GROUP BY 
+    t.name
+ORDER BY 
+    NumeroDeRegistros DESC;</code></p>
+<p><strong>Explicação da consulta:</strong></p>
+<ul>
+<li>A consulta usa a função <code>COUNT(*)</code> para contar o número de registros em cada tabela.</li>
+<li>A consulta usa a tabela <code>sys.tables</code> para obter informações sobre as tabelas no banco de dados.</li>
+<li>A consulta usa a tabela <code>sys.indexes</code> para obter informações sobre os índices nas tabelas.</li>
+<li>A consulta usa a cláusula <code>INNER JOIN</code> para combinar as tabelas <code>sys.tables</code> e <code>sys.indexes</code>.</li>
+<li>A consulta usa a cláusula <code>WHERE</code> para filtrar os resultados para incluir apenas tabelas com uma chave primária.</li>
+<li>A consulta usa a cláusula <code>GROUP BY</code> para agrupar os resultados por nome da tabela.</li>
+<li>A consulta usa a cláusula <code>ORDER BY</code> para ordenar os resultados pelo número de registros em ordem decrescente.</li>
+</ul>
+<p><strong>Observações:</strong></p>
+<ul>
+<li>Esta consulta pode ser executada em qualquer versão do SQL Server.</li>
+<li>Esta consulta pode ser modificada para atender às suas necessidades específicas. Por exemplo, você pode adicionar colunas adicionais à consulta para obter mais informações sobre as tabelas.</li>
+<li>Você pode usar a consulta como ponto de partida para identificar as tabelas que podem precisar de otimização.</li>
+</ul>
+<p><strong>Consultas adicionais:</strong></p>
+<ul>
+<li>Você pode usar a seguinte consulta para obter o tamanho de cada tabela:</li>
+</ul>
+<p><code>sql
+SELECT 
+    t.name AS NomeDaTabela, 
+    SUM(a.total_pages) * 8 AS TamanhoEmKB
+FROM 
+    sys.tables t
+INNER JOIN 
+    sys.partitions p ON t.object_id = p.object_id
+INNER JOIN 
+    sys.allocation_units a ON p.partition_id = a.container_id
+GROUP BY 
+    t.name
+ORDER BY 
+    TamanhoEmKB DESC;</code></p>
+<ul>
+<li>Você pode usar a seguinte consulta para obter o número de páginas de dados em cada tabela:</li>
+</ul>
+<p><code>sql
+SELECT 
+    t.name AS NomeDaTabela, 
+    SUM(a.total_pages) AS NumeroDePaginas
+FROM 
+    sys.tables t
+INNER JOIN 
+    sys.partitions p ON t.object_id = p.object_id
+INNER JOIN 
+    sys.allocation_units a ON p.partition_id = a.container_id
+GROUP BY 
+    t.name
+ORDER BY 
+    NumeroDePaginas DESC;</code></p>
+<p><strong>Recursos adicionais:</strong></p>
+<ul>
+<li>Microsoft Docs: Identificar as tabelas maiores em um banco de dados: [URL inválido removido]</li>
+<li>Brent Ozar: Encontrando as maiores tabelas em um banco de dados: [URL inválido removido]</li>
+</ul>
+<p>Espero que esta consulta seja útil para você!</p>
+            
+        </body>
+        </html>
+        
