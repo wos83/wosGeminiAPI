@@ -116,10 +116,10 @@ $RECYCLE.BIN/
 *.7z
 
 # Databases
-#*.db
-#*.s3db
-#*.sdb
-#*.sqlite
+*.db
+*.s3db
+*.sdb
+*.sqlite
 
 # Videos & Audios
 *.mp4
@@ -130,7 +130,11 @@ $RECYCLE.BIN/
 *.webm
 *.mp3
 
+# Web
+*.html
+*.htm
+
 # Others
 *.bak
 *.log
-# wosGit.bat
+wosGit.bat
