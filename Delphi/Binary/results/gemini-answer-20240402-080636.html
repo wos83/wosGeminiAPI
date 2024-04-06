@@ -1,0 +1,72 @@
+
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+        <meta charset="utf-8">
+            <title>Gemini API (Google) 2024-04-02 08:06:36.955721</title>
+            <link href='https://fonts.googleapis.com/css?family=PT+Sans'
+        rel='stylesheet' type='text/css'>
+            <style>
+                body {
+                    font-family: PT Sans;
+                }
+            </style>
+        </head>
+        <body>
+            <h2>Usando o ACTIVE_TRANSACTION no SQL Server</h2>
+<p>Olá! Sou um DBA Senior de SQL Server da Microsoft com mais de 30 anos de experiência. Estou aqui para te ajudar a entender como usar o ACTIVE_TRANSACTION.</p>
+<p><strong>O que é ACTIVE_TRANSACTION?</strong></p>
+<p>ACTIVE_TRANSACTION é uma função especial no SQL Server que permite identificar e gerenciar transações ativas em um banco de dados. Ela fornece informações detalhadas sobre cada transação, como:</p>
+<ul>
+<li>ID da transação</li>
+<li>ID do usuário que iniciou a transação</li>
+<li>Nome da transação (se definido)</li>
+<li>Início da transação</li>
+<li>Tempo decorrido desde o início da transação</li>
+<li>Estado da transação (ativa, commitada, abortada)</li>
+<li>Bloqueios mantidos pela transação</li>
+<li>Recursos usados pela transação</li>
+</ul>
+<p><strong>Por que usar o ACTIVE_TRANSACTION?</strong></p>
+<p>Existem diversos motivos para usar o ACTIVE_TRANSACTION, como:</p>
+<ul>
+<li><strong>Solucionar problemas de bloqueio:</strong> Se um processo está aguardando um bloqueio por um longo tempo, você pode usar o ACTIVE_TRANSACTION para identificar qual transação está segurando o bloqueio e tomar as medidas cabíveis.</li>
+<li><strong>Monitorar o desempenho da transação:</strong> Você pode usar o ACTIVE_TRANSACTION para identificar transações que estão demorando muito tempo para serem concluídas.</li>
+<li><strong>Gerenciar transações longas:</strong> Se uma transação está em execução há muito tempo, você pode usar o ACTIVE_TRANSACTION para forçar o rollback ou commit da transação.</li>
+<li><strong>Auditar o acesso ao banco de dados:</strong> Você pode usar o ACTIVE_TRANSACTION para rastrear quem está acessando o banco de dados e quais transações estão sendo executadas.</li>
+</ul>
+<p><strong>Como usar o ACTIVE_TRANSACTION?</strong></p>
+<p>Existem duas maneiras principais de usar o ACTIVE_TRANSACTION:</p>
+<ul>
+<li><strong>Usando o comando DBCC OPENTRAN:</strong></li>
+</ul>
+<p><code>sql
+DBCC OPENTRAN</code></p>
+<p>Este comando exibe informações sobre todas as transações ativas no banco de dados atual.</p>
+<ul>
+<li><strong>Usando a função DMV sys.dm_tran_database_transactions:</strong></li>
+</ul>
+<p><code>sql
+SELECT *
+FROM sys.dm_tran_database_transactions</code></p>
+<p>Esta função DMV fornece informações detalhadas sobre todas as transações ativas no banco de dados, incluindo bloqueios e recursos usados.</p>
+<p><strong>Recursos adicionais:</strong></p>
+<ul>
+<li>Documentação da Microsoft sobre o comando DBCC OPENTRAN: [URL inválido removido]</li>
+<li>Documentação da Microsoft sobre a função DMV sys.dm_tran_database_transactions: [URL inválido removido]</li>
+</ul>
+<p><strong>Dicas importantes:</strong></p>
+<ul>
+<li>Para usar o ACTIVE_TRANSACTION, você precisa ter a permissão <strong>VIEW DATABASE STATE</strong>.</li>
+<li>O comando DBCC OPENTRAN pode ser usado em qualquer banco de dados, mas a função DMV sys.dm_tran_database_transactions só está disponível no SQL Server 2005 e versões posteriores.</li>
+<li>É importante ter cuidado ao usar o ACTIVE_TRANSACTION para forçar o rollback ou commit de transações. Isso pode causar perda de dados se a transação não for concluída corretamente.</li>
+</ul>
+<p>Espero que esta informação seja útil! Se você tiver mais perguntas sobre o ACTIVE_TRANSACTION, não hesite em perguntar.</p>
+<p><strong>Atenciosamente,</strong></p>
+<p><strong>DBA Senior de SQL Server</strong></p>
+<p><strong>Microsoft</strong></p>
+<p><strong>Mais de 30 anos de experiência</strong></p>
+            
+        </body>
+        </html>
+        
