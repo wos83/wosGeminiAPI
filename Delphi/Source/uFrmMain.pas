@@ -148,7 +148,7 @@ begin
    // ' no Brasil' + //
    // ' ?';
 
-   mmoChat.Lines.Text := 'create four images of chinese panda eating bamboo in the forest, panoramic perspective, photorealistic, ultra-realistic, high-definition, cinematic, hdr, 8k';
+   mmoChat.Lines.Text := 'create four images of chinese panda eating bamboo in the forest, panoramic perspective, photorealistic, ultra-realistic, high-definition, cinematic, photographic, hdr, 8k';
    {$ENDIF}
    pyEngine.InitThreads := True;
 end;
