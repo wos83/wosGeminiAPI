@@ -123,6 +123,9 @@ end;
 
 procedure TFrmMain.FormCreate(Sender: TObject);
 begin
+   pyEngine.DllPath := ExtractFilePath(ParamStr(0));
+   pyEngine.DllName := 'python.dll';
+
    pgcMain.ActivePage := tsHTML;
 
    mmoCode.Visible := False;

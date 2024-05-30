@@ -2,87 +2,70 @@ object FrmMain: TFrmMain
   Left = 0
   Top = 0
   Caption = 'FrmMain'
-  ClientHeight = 1160
-  ClientWidth = 1372
+  ClientHeight = 606
+  ClientWidth = 784
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -21
+  Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
   OnCreate = FormCreate
   OnShow = FormShow
-  PixelsPerInch = 168
-  TextHeight = 30
+  TextHeight = 15
   object svN1: TSplitter
     AlignWithMargins = True
-    Left = 6
-    Top = 649
-    Width = 1360
-    Height = 6
+    Left = 3
+    Top = 316
+    Width = 778
+    Height = 4
     Cursor = crVSplit
-    Margins.Left = 6
-    Margins.Top = 6
-    Margins.Right = 6
-    Margins.Bottom = 6
     Align = alBottom
-    ExplicitTop = 650
+    ExplicitTop = 314
   end
   object btnOK: TButton
     AlignWithMargins = True
-    Left = 6
-    Top = 1111
-    Width = 1360
-    Height = 43
-    Margins.Left = 6
-    Margins.Top = 6
-    Margins.Right = 6
-    Margins.Bottom = 6
+    Left = 3
+    Top = 578
+    Width = 778
+    Height = 25
     Align = alBottom
     Caption = 'OK'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -29
+    Font.Height = -17
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
     TabOrder = 3
     OnClick = btnOKClick
-    ExplicitTop = 1109
-    ExplicitWidth = 1348
+    ExplicitTop = 577
+    ExplicitWidth = 774
   end
   object mmoChat: TMemo
     AlignWithMargins = True
-    Left = 6
-    Top = 667
-    Width = 1360
-    Height = 210
-    Margins.Left = 6
-    Margins.Top = 6
-    Margins.Right = 6
-    Margins.Bottom = 6
+    Left = 3
+    Top = 326
+    Width = 778
+    Height = 120
     Align = alBottom
     Lines.Strings = (
       'Chat')
     ScrollBars = ssVertical
     TabOrder = 1
-    ExplicitTop = 665
-    ExplicitWidth = 1348
+    ExplicitTop = 325
+    ExplicitWidth = 774
   end
   object mmoCode: TMemo
     AlignWithMargins = True
-    Left = 6
-    Top = 889
-    Width = 1360
-    Height = 210
-    Margins.Left = 6
-    Margins.Top = 6
-    Margins.Right = 6
-    Margins.Bottom = 6
+    Left = 3
+    Top = 452
+    Width = 778
+    Height = 120
     Align = alBottom
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -22
+    Font.Height = -13
     Font.Name = 'Courier New'
     Font.Style = []
     Lines.Strings = (
@@ -244,56 +227,40 @@ object FrmMain: TFrmMain
     ParentFont = False
     ScrollBars = ssVertical
     TabOrder = 2
-    ExplicitTop = 887
-    ExplicitWidth = 1348
+    ExplicitTop = 451
+    ExplicitWidth = 774
   end
   object pnlContent: TPanel
     AlignWithMargins = True
-    Left = 6
-    Top = 6
-    Width = 1360
-    Height = 631
-    Margins.Left = 6
-    Margins.Top = 6
-    Margins.Right = 6
-    Margins.Bottom = 6
+    Left = 3
+    Top = 3
+    Width = 778
+    Height = 307
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 1348
-    ExplicitHeight = 629
+    ExplicitWidth = 774
+    ExplicitHeight = 306
     object pgcMain: TPageControl
       AlignWithMargins = True
-      Left = 7
-      Top = 7
-      Width = 1346
-      Height = 617
-      Margins.Left = 6
-      Margins.Top = 6
-      Margins.Right = 6
-      Margins.Bottom = 6
+      Left = 4
+      Top = 4
+      Width = 770
+      Height = 299
       ActivePage = tsHTML
       Align = alClient
       MultiLine = True
       TabOrder = 0
-      ExplicitWidth = 1334
-      ExplicitHeight = 615
+      ExplicitWidth = 766
+      ExplicitHeight = 298
       object tsResponse: TTabSheet
-        Margins.Left = 6
-        Margins.Top = 6
-        Margins.Right = 6
-        Margins.Bottom = 6
         Caption = 'Result'
         ImageIndex = 1
         object mmoResponse: TMemo
           AlignWithMargins = True
-          Left = 6
-          Top = 6
-          Width = 1326
-          Height = 560
-          Margins.Left = 6
-          Margins.Top = 6
-          Margins.Right = 6
-          Margins.Bottom = 6
+          Left = 3
+          Top = 3
+          Width = 756
+          Height = 263
           Align = alClient
           Lines.Strings = (
             'Result')
@@ -302,26 +269,18 @@ object FrmMain: TFrmMain
         end
       end
       object tsHTML: TTabSheet
-        Margins.Left = 6
-        Margins.Top = 6
-        Margins.Right = 6
-        Margins.Bottom = 6
         Caption = 'Result +'
         ImageIndex = 1
         object ebResponse: TEdgeBrowser
           Left = 0
           Top = 0
-          Width = 1338
-          Height = 572
-          Margins.Left = 6
-          Margins.Top = 6
-          Margins.Right = 6
-          Margins.Bottom = 6
+          Width = 762
+          Height = 269
           Align = alClient
           TabOrder = 0
           UserDataFolder = '%LOCALAPPDATA%\bds.exe.WebView2'
-          ExplicitWidth = 1326
-          ExplicitHeight = 570
+          ExplicitWidth = 758
+          ExplicitHeight = 268
         end
       end
     end
