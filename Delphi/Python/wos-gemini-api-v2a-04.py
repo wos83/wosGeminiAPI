@@ -3,7 +3,9 @@
 # pip install -U browser-cookie3
 
 import asyncio
-from gemini_webapi import GeminiClient
+from gemini_webapi import GeminiClient, set_log_level
+
+set_log_level("DEBUG")
 
 
 async def main():
