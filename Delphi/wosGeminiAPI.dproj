@@ -4,7 +4,7 @@
         <ProjectVersion>20.1</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win64</Platform>
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -110,7 +110,6 @@ $(PreBuildEvent)]]></PreBuildEvent>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
-        <DCC_Define>madExcept;$(DCC_Define)</DCC_Define>
         <DCC_MapFile>3</DCC_MapFile>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
@@ -122,8 +121,8 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
         <VerInfo_Release>31</VerInfo_Release>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
-        <VerInfo_Build>66</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=2024.1.31.66;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=br.codigo-livre.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=2023.11.28.0;Comments=https://github.com/wos83</VerInfo_Keys>
+        <VerInfo_Build>67</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=2024.1.31.67;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=br.codigo-livre.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=2023.11.28.0;Comments=https://github.com/wos83</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
