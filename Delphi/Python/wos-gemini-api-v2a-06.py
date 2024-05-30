@@ -9,7 +9,11 @@ import datetime
 import sqlite3
 import os
 import markdown
+
+from gemini_webapi import set_log_level
 from gemini_webapi import GeminiClient
+
+set_log_level("DEBUG")
 
 
 async def convertToBinaryData(filename):
